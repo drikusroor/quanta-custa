@@ -100,7 +100,7 @@ const ExpenseTracker: React.FC = () => {
       <h1 className="text-4xl font-bold text-white mb-8 drop-shadow">Quanta Custa</h1>
 
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8 w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4">Add Participants</h2>
+        <h2 className="text-xl font-semibold mb-4">Add Participants</h2>
         <div className="flex mb-4">
           <input
             type="text"
@@ -119,7 +119,7 @@ const ExpenseTracker: React.FC = () => {
       </div>
 
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8 w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4">Add Cost</h2>
+        <h2 className="text-xl font-semibold mb-4">Add Cost</h2>
         <div className="space-y-4">
           <label className="block mt-2">
             Item
@@ -182,7 +182,7 @@ const ExpenseTracker: React.FC = () => {
       </div>
 
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8 w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4">Payments</h2>
+        <h2 className="text-xl font-semibold mb-4">Payments</h2>
         <ul className="list-disc list-inside text-gray-700">
           {calculatePayments().map((payment, index) => (
             <li key={index}>{payment}</li>
