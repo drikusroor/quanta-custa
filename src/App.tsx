@@ -8,7 +8,7 @@ interface Participant {
 interface Cost {
   item: string;
   amount: number;
-  cost: number;
+  cost: number | string;
   paidBy: number;
   paidFor: number[];
 }
