@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import pako from 'pako';
 
 interface Participant {
@@ -15,7 +15,7 @@ interface Cost {
 
 interface Data {
   u: string[];
-  c: (string | number | number[])[];
+  c: [string, number, number | string, number, number[]][];
 }
 
 const ExpenseTracker: React.FC = () => {
@@ -23,6 +23,37 @@ const ExpenseTracker: React.FC = () => {
   const [costs, setCosts] = useState<Cost[]>([]);
   const [newParticipant, setNewParticipant] = useState('');
   const [newCost, setNewCost] = useState<Cost>({ item: '', amount: 0, cost: 0, paidBy: 0, paidFor: [] });
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const dataParam = urlParams.get('d');
+    if (dataParam) {
+      const data = decodeData(dataParam);
+      if (data) {
+        setParticipants(data.u.map(name => ({ name })));
+        setCosts(data.c.map(item => ({
+          item: item[0] as string,
+          amount: item[1] as number,
+          cost: item[2] as number,
+          paidBy: item[3] as number,
+          paidFor: item[4] as number[]
+        })));
+      }
+    }
+  }, []);
+
+  const decodeData = (urlSafeBase64String: string): Data | null => {
+    try {
+      const base64 = urlSafeBase64String.replace(/-/g, '+').replace(/_/g, '/');
+      const compressed = atob(base64);
+      // @ts-expect-error will be fixed in the next step
+      const decompressedJsonString = pako.inflate(compressed, { to: 'string' });
+      return JSON.parse(decompressedJsonString) as Data;
+    } catch (error) {
+      console.error('Failed to decode data', error);
+      return null;
+    }
+  };
 
   const addParticipant = () => {
     setParticipants([...participants, { name: newParticipant }]);
@@ -85,7 +116,6 @@ const ExpenseTracker: React.FC = () => {
   const shareUrl = () => {
     const data: Data = {
       u: participants.map(p => p.name),
-      // @ts-expect-error will be fixed in the next step
       c: costs.map(cost => [cost.item, cost.amount, cost.cost, cost.paidBy, cost.paidFor])
     };
     const jsonString = JSON.stringify(data);
