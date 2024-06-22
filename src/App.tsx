@@ -67,7 +67,7 @@ const ExpenseTracker: React.FC = () => {
         participants.forEach((_, j) => {
           if (balances[j] < 0) {
             const amount = Math.min(balance, -balances[j]);
-            payments.push(`${participants[j].name} pays ${participants[i].name} $${amount.toFixed(2)}`);
+            payments.push(`${participants[j].name} pays ${participants[i].name} ${amount.toFixed(2)} doubloons`);
             balances[i] -= amount;
             balances[j] += amount;
           }
