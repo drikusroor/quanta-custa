@@ -38,6 +38,7 @@ const ExpenseTracker: React.FC = () => {
           paidBy: item[3] as number,
           paidFor: item[4] as number[]
         })));
+        console.log("Parsed data: ", data)
       }
     }
   }, []);
@@ -106,9 +107,6 @@ const ExpenseTracker: React.FC = () => {
         });
       }
     });
-
-    console.log({ balances, payments })
-
 
     return payments;
   };
