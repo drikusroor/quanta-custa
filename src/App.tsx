@@ -53,7 +53,7 @@ const ExpenseTracker: React.FC = () => {
     const balances = participants.map(() => 0);
 
     costs.forEach(cost => {
-      const totalCost = parseFloat(cost.cost);
+      const totalCost = parseFloat(cost.cost) * cost.amount;
       const share = totalCost / cost.paidFor.length;
       cost.paidFor.forEach(index => {
         balances[index] -= share;
@@ -149,6 +149,7 @@ const ExpenseTracker: React.FC = () => {
             onChange={handleCostChange}
             placeholder="Cost"
             className="w-full px-4 py-2 border rounded-lg focus:outline-none"
+            step="0.01"
           />
           <label className="block mt-2">Paid By</label>
           <select
