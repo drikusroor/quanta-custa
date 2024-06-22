@@ -75,7 +75,7 @@ const ExpenseTracker: React.FC = () => {
       }
     });
 
-    console.log({balances, payments })
+    console.log({ balances, payments })
 
 
     return payments;
@@ -187,6 +187,8 @@ const ExpenseTracker: React.FC = () => {
           {calculatePayments().map((payment, index) => (
             <li key={index}>{payment}</li>
           ))}
+          {participants.length === 0 ? <li>Add participants to calculate payments</li> : costs.length === 0 ? <li>Add costs to calculate payments</li> : null}
+
         </ul>
       </div>
 
