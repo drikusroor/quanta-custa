@@ -37,11 +37,21 @@ const CostsForm = ({
     setNewCost({ ...newCost, paidFor: newPaidFor });
   };
 
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!newCost.item || !newCost.amount || !newCost.cost) {
+      return;
+    }
+
+    addCost();
+  };
+
   return (
-    <>
+    <form onSubmit={onSubmit}>
       <h2 className="text-xl font-semibold mb-4">Add Cost</h2>
-      <div className="space-y-4">
-        <label className="block mt-2">Item</label>
+      <div className="space-y-2">
+        <label className="block">Item</label>
         <input
           type="text"
           name="item"
@@ -50,7 +60,7 @@ const CostsForm = ({
           placeholder="Item"
           className="w-full px-4 py-2 border rounded-lg focus:outline-none"
         />
-        <label className="block mt-2">Amount</label>
+        <label className="block">Amount</label>
         <input
           type="number"
           name="amount"
@@ -59,7 +69,7 @@ const CostsForm = ({
           placeholder="Amount"
           className="w-full px-4 py-2 border rounded-lg focus:outline-none"
         />
-        <label className="block mt-2">Cost</label>
+        <label className="block">Cost</label>
         <input
           type="number"
           name="cost"
@@ -69,7 +79,7 @@ const CostsForm = ({
           className="w-full px-4 py-2 border rounded-lg focus:outline-none"
           step="0.01"
         />
-        <label className="block mt-2">Paid By</label>
+        <label className="block">Paid By</label>
         <select
           name="paidBy"
           value={newCost.paidBy}
@@ -82,7 +92,7 @@ const CostsForm = ({
             </option>
           ))}
         </select>
-        <label className="block mt-2">Paid For</label>
+        <label className="block">Paid For</label>
         <div className="flex flex-wrap">
           {participants.map((participant, index) => (
             <label key={index} className="mr-4">
@@ -96,14 +106,11 @@ const CostsForm = ({
             </label>
           ))}
         </div>
-        <button
-          onClick={addCost}
-          className="bg-blue-500 text-white w-full py-2 rounded-lg hover:bg-blue-600"
-        >
+        <button className="bg-blue-500 text-white w-full py-2 rounded-lg hover:bg-blue-600">
           Add Cost
         </button>
       </div>
-    </>
+    </form>
   );
 };
 
