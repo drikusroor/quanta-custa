@@ -13,7 +13,6 @@ const ParticipantsForm = ({
   participants,
   setParticipants,
 }: ParticipantsFormProps) => {
-
   const addParticipant = () => {
     setParticipants([...participants, { name: newParticipant }]);
     setNewParticipant("");
@@ -40,9 +39,7 @@ const ParticipantsForm = ({
           placeholder="Participant name"
           className="flex-1 px-4 py-2 border rounded-l-lg focus:outline-none"
         />
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600"
-        >
+        <button className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600">
           Add
         </button>
       </div>

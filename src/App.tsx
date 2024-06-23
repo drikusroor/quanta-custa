@@ -35,13 +35,13 @@ const ExpenseTracker: React.FC = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const dataParam = urlParams.get('d');
+    const dataParam = urlParams.get("d");
     if (dataParam) {
       const data = decodeData(dataParam);
       if (data) {
-        setParticipants(data.u.map(name => ({ name })));
+        setParticipants(data.u.map((name) => ({ name })));
         setCosts(
-          data.c.map(item => ({
+          data.c.map((item) => ({
             item: item[0] as string,
             amount: item[1] as number,
             cost: item[2] as number,
@@ -49,38 +49,44 @@ const ExpenseTracker: React.FC = () => {
             paidFor: item[4] as number[],
           }))
         );
-        console.log('Parsed data: ', data);
+        console.log("Parsed data: ", data);
       }
     }
   }, []);
 
   const decodeData = (urlSafeBase64String: string): Data | null => {
     try {
-      const base64 = urlSafeBase64String.replace(/-/g, '+').replace(/_/g, '/');
-      const compressed = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
-      const decompressed = pako.inflate(compressed, { to: 'string' });
+      const base64 = urlSafeBase64String.replace(/-/g, "+").replace(/_/g, "/");
+      const compressed = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+      const decompressed = pako.inflate(compressed, { to: "string" });
       return JSON.parse(decompressed) as Data;
     } catch (error) {
-      console.error('Failed to decode data', error);
+      console.error("Failed to decode data", error);
       return null;
     }
   };
 
   const shareUrl = () => {
     const data: Data = {
-      u: participants.map(p => p.name),
-      c: costs.map(cost => [cost.item, cost.amount, cost.cost, cost.paidBy, cost.paidFor]),
+      u: participants.map((p) => p.name),
+      c: costs.map((cost) => [
+        cost.item,
+        cost.amount,
+        cost.cost,
+        cost.paidBy,
+        cost.paidFor,
+      ]),
     };
     const jsonString = JSON.stringify(data);
-    const compressed = pako.deflate(jsonString) as unknown as number[]
+    const compressed = pako.deflate(jsonString) as unknown as number[];
     const base64String = btoa(String.fromCharCode.apply(null, compressed));
     const urlSafeBase64String = base64String
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=+$/, '');
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
     const url = `${window.location.origin}${window.location.pathname}?d=${urlSafeBase64String}`;
     navigator.clipboard.writeText(url);
-    alert('URL copied to clipboard: ' + url);
+    alert("URL copied to clipboard: " + url);
   };
 
   const calculatePayments = () => {
