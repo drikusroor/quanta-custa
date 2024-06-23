@@ -8,6 +8,8 @@ Features
 * Calculate who should pay back money to whom
 * Share the data via a URL with compressed and encoded data
 
+You can view the application at [drikusroor.github.io/quanto-custa](https://drikusroor.github.io/quanto-custa/).
+
 ## Installation
 
 Clone the repository:
