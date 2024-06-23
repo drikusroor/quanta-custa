@@ -129,7 +129,7 @@ const ExpenseTracker: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 flex flex-col items-center p-4">
-      <h1 className="text-4xl font-bold text-white mb-8 drop-shadow">Quanta Custa</h1>
+      <h1 className="text-4xl font-bold text-white mb-8 drop-shadow">Quanto Custa</h1>
 
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8 w-full max-w-md">
         <h2 className="text-xl font-semibold mb-4">Add Participants</h2>
