@@ -50,41 +50,41 @@ const CostsForm = ({
   return (
     <form onSubmit={onSubmit}>
       <h2 className="text-xl font-semibold mb-4">Add Cost</h2>
-      <div className="space-y-2">
-        <label className="block">Item</label>
+      <div className="">
+        <label className="block mt-2 text-sm text-slate-500">Item</label>
         <input
           type="text"
           name="item"
           value={newCost.item}
           onChange={handleCostChange}
           placeholder="Item"
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none"
+          className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none"
         />
-        <label className="block">Amount</label>
+        <label className="block mt-2 text-sm text-slate-500">Amount</label>
         <input
           type="number"
           name="amount"
           value={newCost.amount}
           onChange={handleCostChange}
           placeholder="Amount"
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none"
+          className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none"
         />
-        <label className="block">Cost</label>
+        <label className="block mt-2 text-sm text-slate-500">Cost</label>
         <input
           type="number"
           name="cost"
           value={newCost.cost}
           onChange={handleCostChange}
           placeholder="Cost"
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none"
+          className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none"
           step="0.01"
         />
-        <label className="block">Paid By</label>
+        <label className="block mt-2 text-sm text-slate-500">Paid By</label>
         <select
           name="paidBy"
           value={newCost.paidBy}
           onChange={handleCostChange}
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none"
+          className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none"
         >
           {participants.map((participant, index) => (
             <option key={index} value={index}>
@@ -92,8 +92,8 @@ const CostsForm = ({
             </option>
           ))}
         </select>
-        <label className="block">Paid For</label>
-        <div className="flex flex-wrap">
+        <label className="block mt-2 text-sm text-slate-500">Paid For</label>
+        <div className="flex flex-wrap mt-1">
           {participants.map((participant, index) => (
             <label key={index} className="mr-4">
               <input
@@ -105,8 +105,9 @@ const CostsForm = ({
               {participant.name}
             </label>
           ))}
+          { !participants.length && <p className="text-slate-500">Add participants to add costs</p>}
         </div>
-        <button className="bg-blue-500 text-white w-full py-2 rounded-lg hover:bg-blue-600">
+        <button className="bg-blue-500 text-white w-full py-2 rounded-lg mt-4 hover:bg-blue-600">
           Add Cost
         </button>
       </div>
