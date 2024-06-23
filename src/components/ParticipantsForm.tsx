@@ -13,13 +13,24 @@ const ParticipantsForm = ({
   participants,
   setParticipants,
 }: ParticipantsFormProps) => {
+
   const addParticipant = () => {
     setParticipants([...participants, { name: newParticipant }]);
     setNewParticipant("");
   };
 
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!newParticipant) {
+      return;
+    }
+
+    addParticipant();
+  };
+
   return (
-    <>
+    <form onSubmit={onSubmit}>
       <h2 className="text-xl font-semibold mb-4">Add Participants</h2>
       <div className="flex mb-4">
         <input
@@ -30,7 +41,6 @@ const ParticipantsForm = ({
           className="flex-1 px-4 py-2 border rounded-l-lg focus:outline-none"
         />
         <button
-          onClick={addParticipant}
           className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600"
         >
           Add
@@ -43,7 +53,7 @@ const ParticipantsForm = ({
           </li>
         ))}
       </ul>
-    </>
+    </form>
   );
 };
 
