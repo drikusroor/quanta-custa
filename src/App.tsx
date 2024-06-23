@@ -89,6 +89,14 @@ const ExpenseTracker: React.FC = () => {
     alert("URL copied to clipboard: " + url);
   };
 
+  const getReadableCost = (cost: Cost) => {
+    const paidByName = participants[cost.paidBy].name;
+    const paidForNames = cost.paidFor.map((i) => participants[i].name).join(", ");
+    const price = parseFloat(cost.cost).toFixed(2);
+    const total = (cost.amount * parseFloat(cost.cost)).toFixed(2);
+    return `${paidByName} bought ${cost.item} - ${cost.amount} x ${price} = ${total} for ${paidForNames}`;
+  }
+
   const calculatePayments = () => {
     const balances = participants.map(() => 0);
 
@@ -111,7 +119,7 @@ const ExpenseTracker: React.FC = () => {
             payments.push(
               `${participants[j].name} pays ${
                 participants[i].name
-              } ${amount.toFixed(2)} doubloons`
+              } ${amount.toFixed(2)}`
             );
             balances[i] -= amount;
             balances[j] += amount;
@@ -148,7 +156,15 @@ const ExpenseTracker: React.FC = () => {
       </Tile>
 
       <Tile>
-        <h2 className="text-xl font-semibold mb-4">Payments</h2>
+        <h2 className="text-xl font-semibold mb-1">Costs</h2>
+        <ul className="list-disc list-inside text-gray-700">
+          {costs.map((cost, index) => (
+            <li className="text-sm" key={index}>
+              {getReadableCost(cost)}
+            </li>
+          ))}
+        </ul>
+        <h2 className="text-xl font-semibold mt-4 mb-1">Payments</h2>
         <ul className="list-disc list-inside text-gray-700">
           {calculatePayments().map((payment, index) => (
             <li key={index}>{payment}</li>
