@@ -31,7 +31,7 @@ const ParticipantsForm = ({
   return (
     <form onSubmit={onSubmit}>
       <h2 className="text-xl font-semibold mb-4">Add Participants</h2>
-      <div className="flex mb-4">
+      <div className="flex">
         <input
           type="text"
           value={newParticipant}
