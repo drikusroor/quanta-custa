@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import pako from "pako";
 import ParticipantsForm from "./components/ParticipantsForm";
+import Tile from "./components/Tile";
 
 export interface Participant {
   name: string;
@@ -152,16 +153,16 @@ const ExpenseTracker: React.FC = () => {
         Quanto Custa
       </h1>
 
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8 w-full max-w-md">
+      <Tile>
         <ParticipantsForm
           newParticipant={newParticipant}
           setNewParticipant={setNewParticipant}
           participants={participants}
           setParticipants={setParticipants}
         />
-      </div>
+      </Tile>
 
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8 w-full max-w-md">
+      <Tile>
         <h2 className="text-xl font-semibold mb-4">Add Cost</h2>
         <div className="space-y-4">
           <label className="block mt-2">Item</label>
@@ -226,9 +227,9 @@ const ExpenseTracker: React.FC = () => {
             Add Cost
           </button>
         </div>
-      </div>
+      </Tile>
 
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8 w-full max-w-md">
+      <Tile>
         <h2 className="text-xl font-semibold mb-4">Payments</h2>
         <ul className="list-disc list-inside text-gray-700">
           {calculatePayments().map((payment, index) => (
@@ -240,7 +241,7 @@ const ExpenseTracker: React.FC = () => {
             <li>Add costs to calculate payments</li>
           ) : null}
         </ul>
-      </div>
+      </Tile>
 
       <button
         onClick={shareUrl}
