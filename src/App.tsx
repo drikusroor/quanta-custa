@@ -150,6 +150,27 @@ const ExpenseTracker: React.FC = () => {
     return payments;
   };
 
+  const resetForm = () => {
+    // use dialog to confirm reset
+    if (!window.confirm('Are you sure you want to reset the form?')) {
+      return;
+    }
+
+    setParticipants([]);
+    setCosts([]);
+    setNewParticipant("");
+    setNewCost({
+      item: "",
+      amount: "0",
+      cost: "0.00",
+      paidBy: "0",
+      paidFor: [],
+    });
+    // also clear the URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+    addToast('Form reset successfully!');
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 flex flex-col items-center p-4 space-y-8">
       <h1 className="text-4xl font-bold text-white mb-8 drop-shadow">
@@ -210,6 +231,13 @@ const ExpenseTracker: React.FC = () => {
           className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 drop-shadow-lg transition-colors"
         >
           Copy URL
+        </button>
+
+        <button
+          onClick={resetForm}
+          className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 drop-shadow-lg transition-colors"
+        >
+          Reset
         </button>
 
       </div>
