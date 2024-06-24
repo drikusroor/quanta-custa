@@ -6,6 +6,7 @@ interface ParticipantsFormProps {
   setNewParticipant: (value: string) => void;
   participants: Participant[];
   setParticipants: (participants: Participant[]) => void;
+  removeParticipant: (index: number) => void;
 }
 
 const ParticipantsForm = ({
@@ -13,7 +14,9 @@ const ParticipantsForm = ({
   setNewParticipant,
   participants,
   setParticipants,
+  removeParticipant,
 }: ParticipantsFormProps) => {
+
   const addParticipant = () => {
     setParticipants([...participants, { name: newParticipant }]);
     setNewParticipant("");
@@ -53,8 +56,14 @@ const ParticipantsForm = ({
       </div>
       <ul className="list-disc list-inside mt-2">
         {participants.map((participant, index) => (
-          <li key={index} className="text-gray-700">
+          <li key={index} className="text-gray-700 relative">
             {participant.name}
+            <button
+              onClick={() => removeParticipant(index)}
+              className="absolute right-0 top-0 bottom-0 px-2 py-1 text-red-500 hover:text-red-600 transition-opacity"
+            >
+              Remove
+            </button>
           </li>
         ))}
       </ul>

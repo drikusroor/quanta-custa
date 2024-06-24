@@ -150,14 +150,35 @@ const QuantoCusta: React.FC = () => {
     return payments;
   };
 
+  const removeParticipant = (index: number) => {
+
+    // use dialog to confirm remove
+    if (!window.confirm('Are you sure you want to remove this participant?')) {
+      return;
+    }
+
+    // if participant has costs, use dialog to confirm remove
+    if (costs.some((cost) => cost.paidBy === index || cost.paidFor.includes(index))) {
+      if (!window.confirm('This participant has costs associated with them. Are you sure you want to remove them?')) {
+        return;
+      }
+    }
+
+    // remove costs associated with participant
+    setCosts(costs.filter((cost) => cost.paidBy !== index && !cost.paidFor.includes(index)));
+
+    // remove participant
+    setParticipants(participants.filter((_, i) => i !== index));
+  }
+
   const resetForm = () => {
     // use dialog to confirm reset
     if (!window.confirm('Are you sure you want to reset the form?')) {
       return;
     }
 
-    setParticipants([]);
     setCosts([]);
+    setParticipants([]);
     setNewParticipant("");
     setNewCost({
       item: "",
@@ -183,6 +204,7 @@ const QuantoCusta: React.FC = () => {
           setNewParticipant={setNewParticipant}
           participants={participants}
           setParticipants={setParticipants}
+          removeParticipant={removeParticipant}
         />
       </Tile>
       <Tile>
