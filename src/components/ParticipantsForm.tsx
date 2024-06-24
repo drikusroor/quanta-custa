@@ -26,6 +26,10 @@ const ParticipantsForm = ({
       return;
     }
 
+    if (participants.some((participant) => participant.name.toLowerCase() === newParticipant.toLowerCase())) {
+      return;
+    }
+
     addParticipant();
   };
 
