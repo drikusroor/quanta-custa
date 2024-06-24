@@ -4,7 +4,7 @@ interface TileProps {
 
 const Tile = ({ children }: TileProps) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 mb-8 w-full max-w-md">
+    <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
       {children}
     </div>
   );

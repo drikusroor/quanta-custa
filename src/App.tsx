@@ -73,7 +73,7 @@ const ExpenseTracker: React.FC = () => {
     }
   };
 
-  const shareUrl = () => {
+  const getShareUrl = () => {
     const data: Data = {
       u: participants.map((p) => p.name),
       c: costs.map((cost) => [
@@ -91,7 +91,11 @@ const ExpenseTracker: React.FC = () => {
       .replace(/\+/g, "-")
       .replace(/\//g, "_")
       .replace(/=+$/, "");
-    const url = `${window.location.origin}${window.location.pathname}?d=${urlSafeBase64String}`;
+    return `${window.location.origin}${window.location.pathname}?d=${urlSafeBase64String}`;
+  }
+
+  const shareUrl = () => {
+    const url = getShareUrl();
     navigator.clipboard.writeText(url);
     alert("URL copied to clipboard: " + url);
   };
@@ -139,7 +143,7 @@ const ExpenseTracker: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 flex flex-col items-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 flex flex-col items-center p-4 space-y-8">
       <h1 className="text-4xl font-bold text-white mb-8 drop-shadow">
         Quanto Custa
       </h1>
@@ -194,6 +198,14 @@ const ExpenseTracker: React.FC = () => {
       <footer className="mt-8 text-gray-300">
         <p>
           Made by{" "}
+          <a
+            href="https://github.com/drikusroor"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            Drikus Roor
+          </a>{" aka "}
           <a
             href="https://kokokoding.nl"
             target="_blank"
