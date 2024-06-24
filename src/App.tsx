@@ -31,7 +31,7 @@ interface Data {
   c: [string, number, number | string, number, number[]][];
 }
 
-const ExpenseTracker: React.FC = () => {
+const QuantoCusta: React.FC = () => {
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [costs, setCosts] = useState<Cost[]>([]);
   const [newParticipant, setNewParticipant] = useState("");
@@ -268,4 +268,4 @@ const ExpenseTracker: React.FC = () => {
   );
 };
 
-export default ExpenseTracker;
+export default QuantoCusta;
