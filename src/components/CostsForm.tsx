@@ -1,5 +1,5 @@
 import { Cost, NewCostForm, Participant } from "../App";
-import { classNames } from "../util/classNames";
+import classNames from "../util/classNames";
 
 interface CostsFormProps {
   newCost: NewCostForm;

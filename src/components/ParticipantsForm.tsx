@@ -1,5 +1,5 @@
 import { Participant } from "../App";
-import { classNames } from "../util/classNames";
+import classNames from "../util/classNames";
 
 interface ParticipantsFormProps {
   newParticipant: string;

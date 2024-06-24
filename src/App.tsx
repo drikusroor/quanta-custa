@@ -3,6 +3,8 @@ import pako from "pako";
 import ParticipantsForm from "./components/ParticipantsForm";
 import Tile from "./components/Tile";
 import CostsForm from "./components/CostsForm";
+import useToast from "./hooks/useToast";
+import Toasts from "./components/Toasts";
 
 export interface Participant {
   name: string;
@@ -40,6 +42,8 @@ const ExpenseTracker: React.FC = () => {
     paidBy: "0",
     paidFor: [],
   });
+
+  const { addToast, toasts } = useToast();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -96,9 +100,14 @@ const ExpenseTracker: React.FC = () => {
 
   const shareUrl = () => {
     const url = getShareUrl();
-    navigator.clipboard.writeText(url);
-    alert("URL copied to clipboard: " + url);
+    navigator.share?.({ title: "Quanto Custa", url });
   };
+
+  const copyUrlToClipboard = () => {
+    const url = getShareUrl();
+    navigator.clipboard.writeText(url);
+    addToast('URL copied to clipboard!');
+  }
 
   const getReadableCost = (cost: Cost) => {
     const paidByName = participants[cost.paidBy].name;
@@ -128,8 +137,7 @@ const ExpenseTracker: React.FC = () => {
           if (balances[j] < 0) {
             const amount = Math.min(balance, -balances[j]);
             payments.push(
-              `${participants[j].name} pays ${
-                participants[i].name
+              `${participants[j].name} pays ${participants[i].name
               } ${amount.toFixed(2)}`
             );
             balances[i] -= amount;
@@ -188,12 +196,23 @@ const ExpenseTracker: React.FC = () => {
         </ul>
       </Tile>
 
-      <button
-        onClick={shareUrl}
-        className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600"
-      >
-        Share URL
-      </button>
+      <div className="flex flex-wrap w-full items-center justify-center gap-4">
+
+        <button
+          onClick={shareUrl}
+          className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 drop-shadow-lg transition-colors"
+        >
+          Share URL
+        </button>
+
+        <button
+          onClick={copyUrlToClipboard}
+          className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 drop-shadow-lg transition-colors"
+        >
+          Copy URL
+        </button>
+
+      </div>
 
       <footer className="mt-8 text-gray-300">
         <p>
@@ -216,6 +235,7 @@ const ExpenseTracker: React.FC = () => {
           </a>
         </p>
       </footer>
+      <Toasts toasts={toasts} />
     </div>
   );
 };
