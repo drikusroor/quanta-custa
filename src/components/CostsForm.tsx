@@ -36,9 +36,6 @@ const CostsForm = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-
-    console.log({value})
-
     setNewCost({ ...newCost, [name]: value });
   };
 
