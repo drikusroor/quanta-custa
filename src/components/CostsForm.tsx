@@ -1,4 +1,5 @@
 import { Cost, NewCostForm, Participant } from "../App";
+import { classNames } from "../util/classNames";
 
 interface CostsFormProps {
   newCost: NewCostForm;
@@ -29,7 +30,7 @@ const CostsForm = ({
   const addCost = () => {
     const newCostPayload = mapNewCostFormToCost(newCost);
     setCosts([...costs, newCostPayload]);
-    setNewCost({ item: "", amount: "0", cost: "0", paidBy: "0", paidFor: [] });
+    setNewCost({ item: "", amount: "0", cost: "0", paidBy: "", paidFor: [] });
   };
 
   const handleCostChange = (
@@ -58,6 +59,8 @@ const CostsForm = ({
 
     addCost();
   };
+
+  const isDisabled = !participants.length || !newCost.item || !newCost.amount || !newCost.cost || !newCost.paidFor.length || newCost.paidBy === "";
 
   return (
     <form onSubmit={onSubmit}>
@@ -117,9 +120,14 @@ const CostsForm = ({
               {participant.name}
             </label>
           ))}
-          { !participants.length && <p className="text-slate-500">Add participants to add costs</p>}
+          {!participants.length && <p className="text-slate-500">Add participants to add costs</p>}
         </div>
-        <button className="bg-blue-500 text-white w-full py-2 rounded-lg mt-4 hover:bg-blue-600">
+        <button className={classNames(
+          "bg-blue-500 text-white w-full py-2 rounded-lg mt-4 hover:bg-blue-600 transition-opacity",
+          isDisabled && "opacity-50 cursor-not-allowed"
+        )}
+          disabled={isDisabled}
+        >
           Add Cost
         </button>
       </div>
