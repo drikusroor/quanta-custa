@@ -47,7 +47,7 @@ const ParticipantsForm = ({
           Add
         </button>
       </div>
-      <ul className="list-disc list-inside">
+      <ul className="list-disc list-inside mt-2">
         {participants.map((participant, index) => (
           <li key={index} className="text-gray-700">
             {participant.name}
