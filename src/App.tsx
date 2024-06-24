@@ -190,6 +190,20 @@ const ExpenseTracker: React.FC = () => {
       >
         Share URL
       </button>
+
+      <footer className="mt-8 text-gray-300">
+        <p>
+          Made by{" "}
+          <a
+            href="https://kokokoding.nl"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            Koko Koding
+          </a>
+        </p>
+      </footer>
     </div>
   );
 };
