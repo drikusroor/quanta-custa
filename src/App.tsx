@@ -11,9 +11,17 @@ export interface Participant {
 export interface Cost {
   item: string;
   amount: number;
-  cost: number | string;
+  cost: number;
   paidBy: number;
   paidFor: number[];
+}
+
+export interface NewCostForm {
+  item: string;
+  amount: string;
+  cost: string;
+  paidBy: string;
+  paidFor: string[];
 }
 
 interface Data {
@@ -25,11 +33,11 @@ const ExpenseTracker: React.FC = () => {
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [costs, setCosts] = useState<Cost[]>([]);
   const [newParticipant, setNewParticipant] = useState("");
-  const [newCost, setNewCost] = useState<Cost>({
+  const [newCost, setNewCost] = useState<NewCostForm>({
     item: "",
-    amount: 0,
-    cost: 0,
-    paidBy: 0,
+    amount: "0",
+    cost: "0.00",
+    paidBy: "0",
     paidFor: [],
   });
 
@@ -49,7 +57,6 @@ const ExpenseTracker: React.FC = () => {
             paidFor: item[4] as number[],
           }))
         );
-        console.log("Parsed data: ", data);
       }
     }
   }, []);
@@ -92,8 +99,8 @@ const ExpenseTracker: React.FC = () => {
   const getReadableCost = (cost: Cost) => {
     const paidByName = participants[cost.paidBy].name;
     const paidForNames = cost.paidFor.map((i) => participants[i].name).join(", ");
-    const price = parseFloat(cost.cost).toFixed(2);
-    const total = (cost.amount * parseFloat(cost.cost)).toFixed(2);
+    const price = cost.cost.toFixed(2);
+    const total = (cost.amount * cost.cost).toFixed(2);
     return `${paidByName} bought ${cost.item} - ${cost.amount} x ${price} = ${total} for ${paidForNames}`;
   }
 

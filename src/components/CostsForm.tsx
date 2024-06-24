@@ -1,11 +1,21 @@
-import { Cost, Participant } from "../App";
+import { Cost, NewCostForm, Participant } from "../App";
 
 interface CostsFormProps {
-  newCost: Cost;
-  setNewCost: (value: Cost) => void;
+  newCost: NewCostForm;
+  setNewCost: (value: NewCostForm) => void;
   participants: Participant[];
   costs: Cost[];
   setCosts: (costs: Cost[]) => void;
+}
+
+const mapNewCostFormToCost = (newCost: NewCostForm): Cost => {
+  return {
+    item: newCost.item,
+    amount: parseFloat(newCost.amount),
+    cost: parseFloat(newCost.cost),
+    paidBy: parseInt(newCost.paidBy),
+    paidFor: newCost.paidFor.map((index) => parseInt(index)),
+  };
 }
 
 const CostsForm = ({
@@ -15,19 +25,24 @@ const CostsForm = ({
   costs,
   setCosts,
 }: CostsFormProps) => {
+
   const addCost = () => {
-    setCosts([...costs, newCost]);
-    setNewCost({ item: "", amount: 0, cost: 0, paidBy: 0, paidFor: [] });
+    const newCostPayload = mapNewCostFormToCost(newCost);
+    setCosts([...costs, newCostPayload]);
+    setNewCost({ item: "", amount: "0", cost: "0", paidBy: "0", paidFor: [] });
   };
 
   const handleCostChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+
+    console.log({value})
+
     setNewCost({ ...newCost, [name]: value });
   };
 
-  const handlePaidForChange = (index: number) => {
+  const handlePaidForChange = (index: string) => {
     const newPaidFor = [...newCost.paidFor];
     if (newPaidFor.includes(index)) {
       newPaidFor.splice(newPaidFor.indexOf(index), 1);
@@ -98,8 +113,8 @@ const CostsForm = ({
             <label key={index} className="mr-4">
               <input
                 type="checkbox"
-                checked={newCost.paidFor.includes(index)}
-                onChange={() => handlePaidForChange(index)}
+                checked={newCost.paidFor.includes(index.toString())}
+                onChange={() => handlePaidForChange(index.toString())}
                 className="mr-2"
               />
               {participant.name}
